@@ -2,56 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Smartify - Shopify & Social Automation Dashboard</title>
+    <meta name="viewport" content="width=1024">
+    <title>The Smartify - Social Automation Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: #f8f9fa; color: #333; display: flex; height: 100vh; overflow: hidden; }
+        body { background-color: #fcf8f2; color: #333; display: flex; height: 100vh; overflow: hidden; width: 1024px; min-width: 1024px; }
         
-        /* Sidebar */
-        aside { width: 260px; background: #fff; border-right: 1px solid #eaeaea; display: flex; flex-direction: column; justify-content: space-between; padding: 20px; }
-        .logo-area { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; color: #111; margin-bottom: 25px; }
-        .logo-icon { width: 36px; height: 36px; background: #ff9900; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; }
+        /* Sidebar styling like reference image */
+        aside { width: 230px; background: #fffdf9; border-right: 1px solid #f0eae1; display: flex; flex-direction: column; justify-content: space-between; padding: 18px 12px; height: 100vh; position: fixed; left: 0; top: 0; }
+        .logo-area { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; color: #111; margin-bottom: 20px; padding-left: 6px; }
+        .logo-icon { width: 32px; height: 32px; background: #111; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #ffcc00; font-weight: bold; font-size: 16px; }
         
-        .menu { list-style: none; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; flex: 1; }
-        .menu li a { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 10px; color: #555; text-decoration: none; font-weight: 500; font-size: 14px; transition: 0.2s; }
-        .menu li.active a, .menu li a:hover { background: #fff3e0; color: #e68a00; }
+        .menu { list-style: none; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; flex: 1; padding-right: 2px; }
+        .menu::-webkit-scrollbar { width: 3px; }
+        .menu::-webkit-scrollbar-thumb { background: #e0d6c8; border-radius: 10px; }
         
-        .user-profile { border-top: 1px solid #eaeaea; padding-top: 15px; display: flex; align-items: center; justify-content: space-between; }
-        .user-info { display: flex; align-items: center; gap: 10px; }
-        .user-avatar { width: 38px; height: 38px; background: #ff9900; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        .user-details h4 { font-size: 14px; color: #222; }
-        .user-details p { font-size: 12px; color: #777; }
+        .menu li a { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; color: #444; text-decoration: none; font-weight: 500; font-size: 13px; transition: 0.2s; }
+        .menu li.active a, .menu li a:hover { background: #fae19933; color: #b87400; font-weight: 600; }
         
+        .menu-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; background: #f4efe6; color: #333; }
+        .menu li.active .menu-icon { background: #ffcc00; color: #111; }
+        .menu li:nth-child(2) .menu-icon { background: #3b82f6; color: #fff; }
+        .menu li:nth-child(3) .menu-icon { background: #f97316; color: #fff; }
+        .menu li:nth-child(4) .menu-icon { background: #10b981; color: #fff; }
+        .menu li:nth-child(5) .menu-icon { background: #6366f1; color: #fff; }
+        .menu li:nth-child(6) .menu-icon { background: #ec4899; color: #fff; }
+        .menu li:nth-child(7) .menu-icon { background: #0ea5e9; color: #fff; }
+        .menu li:nth-child(8) .menu-icon { background: #8b5cf6; color: #fff; }
+        .menu li:nth-child(9) .menu-icon { background: #f59e0b; color: #fff; }
+        .menu li:nth-child(10) .menu-icon { background: #64748b; color: #fff; }
+
+        /* User Profile Footer in Sidebar */
+        .user-profile { border-top: 1px solid #f0eae1; padding-top: 12px; display: flex; flex-direction: column; gap: 10px; }
+        .user-info { display: flex; align-items: center; gap: 10px; padding-left: 4px; }
+        .user-avatar { width: 32px; height: 32px; background: #ffcc00; color: #111; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; }
+        .user-details h4 { font-size: 12px; color: #111; font-weight: 700; }
+        .user-details p { font-size: 10px; color: #777; }
+        .btn-logout { background: #fff; border: 1px solid #f0eae1; color: #dc2626; padding: 6px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; }
+        .btn-logout:hover { background: #fef2f2; }
+
         /* Main Content */
-        main { flex: 1; overflow-y: auto; padding: 30px; display: flex; flex-direction: column; gap: 25px; }
+        main { margin-left: 230px; flex: 1; overflow-y: auto; height: 100vh; padding: 25px; display: flex; flex-direction: column; gap: 20px; width: calc(100% - 230px); }
         header { display: flex; justify-content: space-between; align-items: center; }
         header h1 { font-size: 24px; font-weight: 700; color: #111; }
-        header p { font-size: 14px; color: #666; }
-        .btn-primary { background: #ff9900; color: #fff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px; box-shadow: 0 4px 12px rgba(255, 153, 0, 0.2); }
+        header p { font-size: 12px; color: #666; margin-top: 2px; }
+        .btn-primary { background: #ffcc00; color: #111; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; box-shadow: 0 4px 12px rgba(255, 204, 0, 0.25); }
 
         /* Stats Grid */
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
-        .stat-card { background: #fff; padding: 20px; border-radius: 14px; border: 1px solid #eaeaea; display: flex; align-items: center; gap: 15px; }
-        .stat-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-        .stat-yellow { background: #fff8e1; color: #fbc02d; }
-        .stat-info h3 { font-size: 20px; font-weight: 700; color: #111; }
-        .stat-info p { font-size: 12px; color: #666; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .stat-card { background: #fff; padding: 16px; border-radius: 14px; border: 1px solid #f0eae1; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.01); }
+        .stat-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; background: #fef9c3; color: #ca8a04; }
+        .stat-info h3 { font-size: 18px; font-weight: 700; color: #111; }
+        .stat-info p { font-size: 11px; color: #666; }
 
         /* Quick Action Banners */
-        .actions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        .action-banner { background: #fff; padding: 20px; border-radius: 14px; border: 1px solid #eaeaea; display: flex; align-items: center; gap: 15px; cursor: pointer; transition: 0.2s; }
-        .action-banner:hover { border-color: #ff9900; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        .action-icon { width: 42px; height: 42px; background: #e3f2fd; color: #1976d2; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .actions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        .action-banner { background: #fff; padding: 16px; border-radius: 14px; border: 1px solid #f0eae1; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.01); }
+        .action-banner:hover { border-color: #ffcc00; }
+        .action-icon { width: 38px; height: 38px; background: #e0f2fe; color: #0284c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
 
         /* Social Accounts Section */
-        .section-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .section-title h2 { font-size: 18px; font-weight: 700; color: #111; }
-        .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        .social-card { background: #fff; padding: 20px; border-radius: 14px; border: 1px solid #eaeaea; display: flex; flex-direction: column; justify-content: space-between; height: 160px; position: relative; }
-        .social-header { display: flex; align-items: center; gap: 12px; }
-        .social-logo { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 18px; }
+        .section-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .section-title h2 { font-size: 16px; font-weight: 700; color: #111; }
+        .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        .social-card { background: #fff; padding: 16px; border-radius: 14px; border: 1px solid #f0eae1; display: flex; flex-direction: column; justify-content: space-between; height: 145px; position: relative; box-shadow: 0 2px 6px rgba(0,0,0,0.01); }
+        .social-header { display: flex; align-items: flex-start; gap: 12px; }
+        .social-logo { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; font-size: 16px; flex-shrink: 0; }
         .fb { background: #1877f2; }
         .insta { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #df5950 45%, #a237b6 60%, #515ecf 90%); }
         .twitter { background: #000; }
@@ -59,14 +76,11 @@
         .telegram { background: #0088cc; }
         .tiktok { background: #010101; }
         
-        .badge { font-size: 10px; padding: 3px 8px; background: #f1f3f5; color: #666; border-radius: 20px; font-weight: 600; position: absolute; top: 20px; right: 20px; }
-        .social-card p { font-size: 12px; color: #666; margin-top: 5px; }
-        .btn-connect { background: #fff8e1; color: #e68a00; border: 1px solid #ffe0b2; padding: 8px; border-radius: 8px; font-weight: 600; cursor: pointer; text-align: center; font-size: 13px; width: 100%; }
-        .btn-connect:hover { background: #ffe0b2; }
-
-        @media(max-width: 1024px) {
-            .stats-grid, .actions-grid, .social-grid { grid-template-columns: repeat(2, 1fr); }
-        }
+        .badge { font-size: 9px; padding: 3px 8px; background: #f4efe6; color: #666; border-radius: 20px; font-weight: 600; position: absolute; top: 16px; right: 16px; }
+        .social-card h4 { font-size: 13px; font-weight: 700; color: #111; }
+        .social-card p { font-size: 11px; color: #666; margin-top: 2px; line-height: 1.3; }
+        .btn-connect { background: #fffdf9; color: #b87400; border: 1px solid #fef3c7; padding: 7px; border-radius: 8px; font-weight: 600; cursor: pointer; text-align: center; font-size: 12px; width: 100%; transition: 0.2s; }
+        .btn-connect:hover { background: #fef3c7; }
     </style>
 </head>
 <body>
@@ -79,18 +93,69 @@
                 <span>The Smartify</span>
             </div>
             <ul class="menu">
-                <li class="active"><a href="#">🏠 Home</a></li>
-                <li><a href="#">📦 New Products</a></li>
-                <li><a href="#">⚡ Auto Sync</a></li>
-                <li><a href="#">🌐 My Website</a></li>
-                <li><a href="#">✨ AI Generator</a></li>
-                <li><a href="#">🎨 Branding</a></li>
-                <li><a href="#">📝 Posts</a></li>
-                <li><a href="#">🔗 Accounts</a></li>
-                <li><a href="#">🔔 Notifications</a></li>
-                <li><a href="#">⚙️ Settings</a></li>
+                <li class="active">
+                    <a href="#">
+                        <div class="menu-icon">🏠</div>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="menu-icon">📦</div>
+                        <span>New Products</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="menu-icon">⚡</div>
+                        <span>Auto Sync</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="menu-icon">🌐</div>
+                        <span>My Website</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="menu-icon">✨</div>
+                        <span>AI Generator</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="menu-icon">🎨</div>
+                        <span>Branding</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="menu-icon">📝</div>
+                        <span>Posts</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="menu-icon">🔗</div>
+                        <span>Accounts</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="menu-icon">🔔</div>
+                        <span>Notifications</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <div class="menu-icon">⚙️</div>
+                        <span>Settings</span>
+                    </a>
+                </li>
             </ul>
         </div>
+        
         <div class="user-profile">
             <div class="user-info">
                 <div class="user-avatar">A</div>
@@ -99,6 +164,7 @@
                     <p>arjun@smartify.com</p>
                 </div>
             </div>
+            <a href="#" class="btn-logout">🚪 Log out</a>
         </div>
     </aside>
 
@@ -115,28 +181,28 @@
         <!-- Stats -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-icon stat-yellow">🔗</div>
+                <div class="stat-icon">🔗</div>
                 <div class="stat-info">
                     <h3>0</h3>
                     <p>Accounts added</p>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon stat-yellow">⏳</div>
+                <div class="stat-icon">⏳</div>
                 <div class="stat-info">
                     <h3>0</h3>
                     <p>Posts waiting</p>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon stat-yellow">🚀</div>
+                <div class="stat-icon">🚀</div>
                 <div class="stat-info">
                     <h3>0</h3>
                     <p>Sent, last 30 days</p>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon stat-yellow">⚠️</div>
+                <div class="stat-icon">⚠️</div>
                 <div class="stat-info">
                     <h3>0</h3>
                     <p>Failed, last 30 days</p>
@@ -149,22 +215,22 @@
             <div class="action-banner">
                 <div class="action-icon">📤</div>
                 <div>
-                    <h4 style="font-size: 14px; font-weight: 700;">Post from my gallery</h4>
-                    <p style="font-size: 12px; color: #666;">Photo, video or text, now or later</p>
+                    <h4 style="font-size: 13px; font-weight: 700; color: #111;">Post from my gallery</h4>
+                    <p style="font-size: 11px; color: #666;">Photo, video or text, now or later</p>
                 </div>
             </div>
             <div class="action-banner">
-                <div class="action-icon" style="background: #fff3e0; color: #ff9900;">✨</div>
+                <div class="action-icon" style="background: #fef3c7; color: #d97706;">✨</div>
                 <div>
-                    <h4 style="font-size: 14px; font-weight: 700;">AI writes for me</h4>
-                    <p style="font-size: 12px; color: #666;">Fresh Shopify reels & posts all day</p>
+                    <h4 style="font-size: 13px; font-weight: 700; color: #111;">AI writes for me</h4>
+                    <p style="font-size: 11px; color: #666;">Fresh Shopify reels & posts all day</p>
                 </div>
             </div>
             <div class="action-banner">
-                <div class="action-icon" style="background: #e8f5e9; color: #2e7d32;">🌐</div>
+                <div class="action-icon" style="background: #dcfce7; color: #16a34a;">🌐</div>
                 <div>
-                    <h4 style="font-size: 14px; font-weight: 700;">Share from Shopify</h4>
-                    <p style="font-size: 12px; color: #666;">Every new store product goes out</p>
+                    <h4 style="font-size: 13px; font-weight: 700; color: #111;">Share from Shopify</h4>
+                    <p style="font-size: 11px; color: #666;">Every new store product goes out</p>
                 </div>
             </div>
         </div>
@@ -173,7 +239,7 @@
         <div>
             <div class="section-title">
                 <h2>Your social accounts</h2>
-                <span style="font-size: 13px; color: #ff9900; font-weight: 600; cursor: pointer;">See all</span>
+                <span style="font-size: 12px; color: #b87400; font-weight: 600; cursor: pointer;">See all</span>
             </div>
             
             <div class="social-grid">
@@ -183,7 +249,7 @@
                     <div class="social-header">
                         <div class="social-logo fb">f</div>
                         <div>
-                            <h4 style="font-size: 14px; font-weight: 700;">Facebook Page</h4>
+                            <h4>Facebook Page</h4>
                             <p>Post to your FB Page automatically.</p>
                         </div>
                     </div>
@@ -196,7 +262,7 @@
                     <div class="social-header">
                         <div class="social-logo insta">📷</div>
                         <div>
-                            <h4 style="font-size: 14px; font-weight: 700;">Instagram</h4>
+                            <h4>Instagram</h4>
                             <p>Business/Creator reel auto-sync.</p>
                         </div>
                     </div>
@@ -209,7 +275,7 @@
                     <div class="social-header">
                         <div class="social-logo twitter">𝕏</div>
                         <div>
-                            <h4 style="font-size: 14px; font-weight: 700;">X (Twitter)</h4>
+                            <h4>X (Twitter)</h4>
                             <p>Post store updates instantly.</p>
                         </div>
                     </div>
@@ -222,20 +288,20 @@
                     <div class="social-header">
                         <div class="social-logo pinterest">P</div>
                         <div>
-                            <h4 style="font-size: 14px; font-weight: 700;">Pinterest</h4>
+                            <h4>Pinterest</h4>
                             <p>One click connect product pins.</p>
                         </div>
                     </div>
                     <button class="btn-connect">Add →</button>
                 </div>
 
-                <!-- Telegram -->
+                *<!-- Telegram -->
                 <div class="social-card">
                     <span class="badge">Not added</span>
                     <div class="social-header">
                         <div class="social-logo telegram">✈</div>
                         <div>
-                            <h4 style="font-size: 14px; font-weight: 700;">Telegram</h4>
+                            <h4>Telegram</h4>
                             <p>Post to channel through bot.</p>
                         </div>
                     </div>
@@ -244,15 +310,15 @@
 
                 <!-- TikTok -->
                 <div class="social-card">
-                    <span class="badge" style="background: #e3f2fd; color: #1976d2;">Coming soon</span>
+                    <span class="badge" style="background: #e0f2fe; color: #0284c7;">Coming soon</span>
                     <div class="social-header">
                         <div class="social-logo tiktok">♪</div>
                         <div>
-                            <h4 style="font-size: 14px; font-weight: 700;">TikTok</h4>
+                            <h4>TikTok</h4>
                             <p>Post product videos to TikTok.</p>
                         </div>
                     </div>
-                    <button class="btn-connect" style="opacity: 0.5; cursor: not-allowed;">Soon</button>
+                    <button class="btn-connect" style="opacity: 0.5; cursor: not-allowed; background: #f8fafc;">Soon</button>
                 </div>
             </div>
         </div>
