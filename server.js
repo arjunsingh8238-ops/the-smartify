@@ -7,8 +7,7 @@ const axios = require('axios'); // Facebook Graph API ke liye
 
 const PORT = process.env.PORT || 10000;
 
-// Shopify webhooks raw body maangte hain verification ke liye,
-// lekin abhi ke liye hum JSON parser use kar rahe hain
+// JSON body parser
 app.use(bodyParser.json());
 
 // Serve frontend static files from 'public' folder
@@ -27,14 +26,14 @@ app.post('/webhook/products/create', async (req, res) => {
     const images = product.images || [];
     const imageUrl = images.length > 0 ? images[0].src : '';
 
-    // Product ka link (agar store URL pata ho)
+    // Product ka link
     const productHandle = product.handle || '';
     const productUrl = productHandle ? `https://the-smartify.myshopify.com/products/${productHandle}` : '';
 
     // Facebook Page par share karne ke liye message
     const message = `🔥 New Arrival: ${title}\n💰 Price: $${price}\n👉 Buy now: ${productUrl}`;
 
-    // Facebook Page Auto-Sharing Logic (Yahan aapko apna Page Access token aur Page ID dalna hoga)
+    // Facebook Page Auto-Sharing Logic
     const PAGE_ACCESS_TOKEN = process.env.PR_PAGE_ACCESS_TOKEN;
     const PAGE_ID = process.env.PR_PAGE_ID;
 
