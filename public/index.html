@@ -8,7 +8,7 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: #fcfbf2; color: #333; display: flex; height: 100vh; overflow: hidden; }
-        aside { width: 230px; background: #fffaf0; border-right: 1px solid #fdeae1; display: flex; flex-direction: column; }
+        aside { width: 230px; background: #fffaf0; border-right: 1px solid #fdeae1; display: flex; flex-direction: column; flex-shrink: 0; }
         .logo-area { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; color: #111; padding: 20px; }
         .logo-icon { width: 32px; height: 32px; background: #fffae0; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
         .menu { list-style: none; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; flex: 1; padding: 15px; }
@@ -20,15 +20,19 @@
         .user-details h4 { font-size: 12px; color: #111; font-weight: 700; }
         .user-details p { font-size: 10px; color: #777; }
         .btn-logout { background: #fff; border: 1px solid #fdeae1; color: #dc2626; padding: 8px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; }
-        main { margin-left: 230px; flex: 1; overflow-y: auto; height: 100vh; padding: 25px; display: flex; flex-direction: column; gap: 20px; }
+        
+        main { flex: 1; overflow-y: auto; height: 100vh; padding: 25px; display: flex; flex-direction: column; gap: 20px; }
         header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         header h1 { font-size: 24px; font-weight: 700; color: #111; }
         .btn-primary { background: #ffcc00; border: none; padding: 10px 16px; font-size: 13px; font-weight: 700; color: #111; border-radius: 8px; cursor: pointer; }
+        
         .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
         .stat-card { background: #fff; padding: 15px; border-radius: 14px; border: 1px solid #fdeae1; display: flex; flex-direction: column; gap: 6px; }
         .stat-title { font-size: 12px; font-weight: 600; color: #666; }
         .stat-value { font-size: 18px; font-weight: 700; color: #111; }
+        
         .section-title { font-size: 16px; font-weight: 700; color: #111; margin-top: 10px; }
+        
         .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
         .social-card { background: #fff; padding: 15px; border-radius: 14px; border: 1px solid #fdeae1; display: flex; flex-direction: column; gap: 10px; position: relative; }
         .badge { position: absolute; top: 15px; right: 16px; font-size: 10px; padding: 3px 8px; background: #eef2fe; color: #3b82f6; border-radius: 20px; font-weight: 600; }
@@ -36,6 +40,8 @@
         .social-header { display: flex; align-items: center; gap: 10px; }
         .social-logo { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; }
         .social-logo.fb { background: #1877f2; }
+        .social-logo.ig { background: #e1306c; }
+        .social-logo.shopify { background: #95bf47; }
         .social-card h4 { font-size: 13px; font-weight: 700; color: #111; }
         .social-card p { font-size: 11px; color: #666; line-height: 1.3; }
         .btn-connect { background: #fffdf0; border: 1px solid #f9f3f7; color: #0366d6; padding: 7px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; }
@@ -45,7 +51,7 @@
         @media (max-width: 768px) {
             body { flex-direction: column; height: auto; overflow: auto; }
             aside { width: 100%; height: auto; border-right: none; border-bottom: 1px solid #fdeae1; }
-            main { margin-left: 0; padding: 15px; height: auto; overflow: visible; }
+            main { height: auto; overflow: visible; padding: 15px; }
             .stat-grid { grid-template-columns: repeat(2, 1fr); }
             .social-grid { grid-template-columns: 1fr; }
         }
@@ -113,7 +119,7 @@
         <div class="social-grid">
             <!-- Facebook Card -->
             <div class="social-card">
-                <span id="fb-badge" class="badge connected">Connected</span>
+                <span class="badge connected">Connected</span>
                 <div class="social-header">
                     <div class="social-logo fb">f</div>
                     <div>
@@ -123,21 +129,51 @@
                 </div>
                 <button class="btn-connect" onclick="connectFacebook()">Manage Integration</button>
             </div>
+
+            <!-- Instagram Card -->
+            <div class="social-card">
+                <span class="badge connected">Connected</span>
+                <div class="social-header">
+                    <div class="social-logo ig">ig</div>
+                    <div>
+                        <h4>Instagram Shop</h4>
+                        <p>Sync products to IG shopping catalog.</p>
+                    </div>
+                </div>
+                <button class="btn-connect" onclick="connectInstagram()">Manage Integration</button>
+            </div>
+
+            <!-- Shopify Card -->
+            <div class="social-card">
+                <span class="badge connected">Connected</span>
+                <div class="social-header">
+                    <div class="social-logo shopify">s</div>
+                    <div>
+                        <h4>Shopify Store</h4>
+                        <p>bucbhq-e5.myshopify.com active.</p>
+                    </div>
+                </div>
+                <button class="btn-connect" onclick="syncShopify()">Store Settings</button>
+            </div>
         </div>
     </main>
 
     <script>
         function syncShopify() {
             const btn = document.querySelector('.btn-primary');
-            btn.innerText = "Syncing Store...";
+            if(btn) btn.innerText = "Syncing Store...";
             setTimeout(() => {
                 alert("Shopify store bucbhq-e5.myshopify.com successfully synced! Products are ready for automation.");
-                btn.innerText = "Sync Shopify Now";
+                if(btn) btn.innerText = "Sync Shopify Now";
             }, 1000);
         }
 
         function connectFacebook() {
             alert("Facebook Page ID: 992996150767582 is securely linked and ready for automated publishing!");
+        }
+
+        function connectInstagram() {
+            alert("Instagram account linked with smart_hub_world is active!");
         }
     </script>
 </body>
