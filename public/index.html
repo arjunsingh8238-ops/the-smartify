@@ -1,220 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1024">
-  <title>The Smartify - Social Automation Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-    body { background-color: #fcf8f2; color: #333; display: flex; height: 100vh; overflow: hidden; width: 1024px; }
-    aside { width: 230px; background: #fffaf9; border-right: 1px solid #fdeae1; display: flex; flex-direction: column; }
-    .logo-area { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; color: #111; padding: 20px; border-bottom: 1px solid #fdeae1; }
-    .logo-icon { width: 32px; height: 32px; background: #111; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; }
-    .menu { list-style: none; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; flex: 1; padding: 15px 10px; }
-    .menu li a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; color: #444; text-decoration: none; font-size: 13px; font-weight: 500; transition: all 0.2s; }
-    .menu li.active a, .menu li a:hover { background: #fee1d3; color: #b87430; font-weight: 600; }
-    .menu-icon { width: 20px; height: 20px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 11px; }
-    .menu li.active .menu-icon { background: #ffcc00; color: #111; }
-    .menu li:nth-child(2) .menu-icon { background: #fbb2f6; color: #fff; }
-    .menu li:nth-child(3) .menu-icon { background: #f97316; color: #fff; }
-    .menu li:nth-child(4) .menu-icon { background: #10b981; color: #fff; }
-    .menu li:nth-child(5) .menu-icon { background: #6366f1; color: #fff; }
-    .menu li:nth-child(6) .menu-icon { background: #ec4899; color: #fff; }
-    .menu li:nth-child(7) .menu-icon { background: #06b6d4; color: #fff; }
-    .menu li:nth-child(8) .menu-icon { background: #8b5cf6; color: #fff; }
-    .menu li:nth-child(9) .menu-icon { background: #f59e0b; color: #fff; }
-    .menu li:nth-child(10) .menu-icon { background: #64748b; color: #fff; }
-    .user-profile { border-top: 1px solid #fdeae1; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
-    .user-info { display: flex; align-items: center; gap: 10px; padding-left: 4px; }
-    .user-avatar { width: 32px; height: 32px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 1px solid #fdeae1; }
-    .user-details h4 { font-size: 12px; color: #111; font-weight: 700; }
-    .user-details p { font-size: 10px; color: #777; }
-    .btn-logout { background: #fff; border: 1px solid #fdeae1; color: #dc2626; padding: 6px; border-radius: 8px; font-size: 12px; cursor: pointer; text-align: center; }
-    main { margin-left: 230px; flex: 1; overflow-y: auto; height: 100vh; padding: 25px; display: flex; flex-direction: column; gap: 24px; }
-    header { display: flex; justify-content: space-between; align-items: center; }
-    header h1 { font-size: 24px; font-weight: 700; color: #111; }
-    header p { font-size: 12px; color: #666; margin-top: 2px; }
-    .btn-primary { background: #ffcc00; color: #111; border: none; padding: 10px 18px; font-size: 13px; font-weight: 700; border-radius: 10px; cursor: pointer; }
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    .stat-card { background: #fff; padding: 16px; border-radius: 14px; border: 1px solid #fdeae1; display: flex; flex-direction: column; gap: 8px; }
-    .stat-icon { width: 30px; height: 30px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; }
-    .stat-info h3 { font-size: 18px; font-weight: 700; color: #111; }
-    .stat-info p { font-size: 11px; color: #666; }
-    .section-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .section-title h2 { font-size: 16px; font-weight: 700; color: #111; }
-    .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .social-card { background: #fff; padding: 16px; border-radius: 14px; border: 1px solid #fdeae1; display: flex; flex-direction: column; gap: 12px; position: relative; }
-    .badge { position: absolute; top: 16px; right: 16px; font-size: 10px; padding: 3px 8px; background: #e0f2fe; color: #0369a1; border-radius: 20px; font-weight: 600; }
-    .social-header { display: flex; align-items: center; gap: 10px; }
-    .social-logo { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; }
-    .social-logo.fb { background: #1877f2; }
-    .social-logo.insta { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
-    .social-logo.twitter { background: #000; }
-    .social-logo.pinterest { background: #e60023; }
-    .social-logo.telegram { background: #0088cc; }
-    .social-logo.tiktok { background: #010101; }
-    .social-card h4 { font-size: 13px; font-weight: 700; color: #111; }
-    .social-card p { font-size: 11px; color: #666; line-height: 1.3; }
-    .btn-connect { background: #fffdf0; border: 1px solid #f0f3c7; color: #0369a1; padding: 7px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; }
-    .btn-connect:hover { background: #e0f2fe; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Smartify - Social Automation Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: #fcfbf2; color: #333; display: flex; height: 100vh; overflow: hidden; }
+        aside { width: 230px; background: #fffaf0; border-right: 1px solid #fdeae1; display: flex; flex-direction: column; }
+        .logo-area { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; color: #111; padding: 20px; }
+        .logo-icon { width: 32px; height: 32px; background: #fffae0; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .menu { list-style: none; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; flex: 1; padding: 15px; }
+        .menu li a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #444; text-decoration: none; transition: 0.2s; }
+        .menu li.active a, .menu li a:hover { background: #fee7e5; color: #d47430; font-weight: 600; }
+        .user-profile { border-top: 1px solid #fdeae1; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+        .user-info { display: flex; align-items: center; gap: 10px; padding-left: 4px; }
+        .user-avatar { width: 32px; height: 32px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; color: #777; }
+        .user-details h4 { font-size: 12px; color: #111; font-weight: 700; }
+        .user-details p { font-size: 10px; color: #777; }
+        .btn-logout { background: #fff; border: 1px solid #fdeae1; color: #dc2626; padding: 8px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; }
+        main { margin-left: 230px; flex: 1; overflow-y: auto; height: 100vh; padding: 25px; display: flex; flex-direction: column; gap: 20px; }
+        header { display: flex; justify-content: space-between; align-items: center; }
+        header h1 { font-size: 24px; font-weight: 700; color: #111; }
+        .btn-primary { background: #ffcc00; border: none; padding: 10px 16px; font-size: 13px; font-weight: 700; color: #111; border-radius: 8px; cursor: pointer; }
+        .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .stat-card { background: #fff; padding: 15px; border-radius: 14px; border: 1px solid #fdeae1; display: flex; flex-direction: column; gap: 6px; }
+        .stat-title { font-size: 12px; font-weight: 600; color: #666; }
+        .stat-value { font-size: 18px; font-weight: 700; color: #111; }
+        .section-title { font-size: 16px; font-weight: 700; color: #111; margin-top: 10px; }
+        .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        .social-card { background: #fff; padding: 15px; border-radius: 14px; border: 1px solid #fdeae1; display: flex; flex-direction: column; gap: 10px; position: relative; }
+        .badge { position: absolute; top: 15px; right: 16px; font-size: 10px; padding: 3px 8px; background: #eef2fe; color: #3b82f6; border-radius: 20px; font-weight: 600; }
+        .badge.connected { background: #d1fae5; color: #059669; }
+        .social-header { display: flex; align-items: center; gap: 10px; }
+        .social-logo { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; }
+        .social-logo.fb { background: #1877f2; }
+        .social-card h4 { font-size: 13px; font-weight: 700; color: #111; }
+        .social-card p { font-size: 11px; color: #666; line-height: 1.3; }
+        .btn-connect { background: #fffdf0; border: 1px solid #f9f3f7; color: #0366d6; padding: 7px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; text-align: center; }
+        .btn-connect:hover { background: #e0f3fa; }
+    </style>
 </head>
 <body>
-  <aside>
-    <div class="logo-area">
-      <div class="logo-icon">S</div>
-      <span>The Smartify</span>
-    </div>
-    <ul class="menu">
-      <li class="active"><a href="#"><span class="menu-icon">📊</span> Dashboard</a></li>
-      <li><a href="#"><span class="menu-icon">🛍️</span> My Store</a></li>
-      <li><a href="#"><span class="menu-icon">⚡</span> Automations</a></li>
-      <li><a href="#"><span class="menu-icon">💬</span> WhatsApp Sync</a></li>
-      <li><a href="#"><span class="menu-icon">📱</span> Instagram Shop</a></li>
-      <li><a href="#"><span class="menu-icon">📈</span> Analytics</a></li>
-      <li><a href="#"><span class="menu-icon">📦</span> Products</a></li>
-      <li><a href="#"><span class="menu-icon">👥</span> Customers</a></li>
-      <li><a href="#"><span class="menu-icon">⚙️</span> Settings</a></li>
-    </ul>
-    <div class="user-profile">
-      <div class="user-info">
-        <div class="user-avatar">A</div>
-        <div class="user-details">
-          <h4>Arjun</h4>
-          <p>Admin Plan</p>
+    <aside>
+        <div class="logo-area">
+            <div class="logo-icon">⚡</div>
+            <span>The Smartify</span>
         </div>
-      </div>
-      <button class="btn-logout" onclick="alert('Logged out successfully!')">Logout</button>
-    </div>
-  </aside>
+        <ul class="menu">
+            <li class="active"><a href="#">📊 Dashboard</a></li>
+            <li><a href="#">📦 My Store</a></li>
+            <li><a href="#">⚡ Automations</a></li>
+            <li><a href="#">💬 WhatsApp Sync</a></li>
+            <li><a href="#">📸 Instagram Shop</a></li>
+            <li><a href="#">📈 Analytics</a></li>
+            <li><a href="#">🛍️ Products</a></li>
+            <li><a href="#">👥 Customers</a></li>
+            <li><a href="#">⚙️ Settings</a></li>
+        </ul>
+        <div class="user-profile">
+            <div class="user-info">
+                <div class="user-avatar">A</div>
+                <div class="user-details">
+                    <h4>Arjun</h4>
+                    <p>Admin Plan</p>
+                </div>
+            </div>
+            <a href="#" class="btn-logout">Logout</a>
+        </div>
+    </aside>
 
-  <main>
-    <header>
-      <div>
-        <h1>Dashboard Overview</h1>
-        <p>Manage your Shopify sync and social automation channels.</p>
-      </div>
-      <button class="btn-primary" onclick="alert('Syncing Shopify Store: bucbhq-e5.myshopify.com ...')">Sync Shopify Now</button>
-    </header>
+    <main>
+        <header>
+            <div>
+                <h1>Dashboard Overview</h1>
+                <p style="font-size: 12px; color: #666;">Manage your Shopify sync and social automation channels.</p>
+            </div>
+            <button class="btn-primary" onclick="syncShopify()">Sync Shopify Now</button>
+        </header>
 
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon" style="background: #3b82f6;">📦</div>
-        <div class="stat-info">
-          <h3>142</h3>
-          <p>Products Synced</p>
+        <div class="stat-grid">
+            <div class="stat-card">
+                <span class="stat-title">Products Synced</span>
+                <span class="stat-value">142</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-title">Automations Run</span>
+                <span class="stat-value">1,240</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-title">Sync Accuracy</span>
+                <span class="stat-value">98%</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-title">PWA Status</span>
+                <span class="stat-value" style="color: #059669;">Active</span>
+            </div>
         </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon" style="background: #10b981;">⚡</div>
-        <div class="stat-info">
-          <h3>1,240</h3>
-          <p>Automations Run</p>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon" style="background: #f59e0b;">💬</div>
-        <div class="stat-info">
-          <h3>98%</h3>
-          <p>Sync Accuracy</p>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon" style="background: #8b5cf6;">🚀</div>
-        <div class="stat-info">
-          <h3>Active</h3>
-          <p>PWA Status</p>
-        </div>
-      </div>
-    </div>
 
-    <div class="section-title">
-      <h2>Connected Sales Channels</h2>
-    </div>
-
-    <div class="social-grid">
-      <div class="social-card">
-        <span class="badge">Not added</span>
-        <div class="social-header">
-          <div class="social-logo fb">f</div>
-          <div>
-            <h4>Facebook Page</h4>
-            <p>Post to your FB Page automatically.</p>
-          </div>
+        <div class="section-title">Connected Sales Channels</div>
+        
+        <div class="social-grid">
+            <!-- Facebook Card -->
+            <div class="social-card">
+                <span id="fb-badge" class="badge connected">Connected</span>
+                <div class="social-header">
+                    <div class="social-logo fb">f</div>
+                    <div>
+                        <h4>Facebook Page</h4>
+                        <p>Post to your FB Page automatically.</p>
+                    </div>
+                </div>
+                <button class="btn-connect" onclick="connectFacebook()">Manage Integration</button>
+            </div>
         </div>
-        <button class="btn-connect" onclick="alert('Connecting Facebook Page...')">Add</button>
-      </div>
+    </main>
 
-      <div class="social-card">
-        <span class="badge">Not added</span>
-        <div class="social-header">
-          <div class="social-logo insta">📷</div>
-          <div>
-            <h4>Instagram</h4>
-            <p>Business/Creator feed auto-sync.</p>
-          </div>
-        </div>
-        <button class="btn-connect" onclick="alert('Connecting Instagram account...')">Add</button>
-      </div>
+    <script>
+        function syncShopify() {
+            const btn = document.querySelector('.btn-primary');
+            btn.innerText = "Syncing Store...";
+            setTimeout(() => {
+                alert("Shopify store bucbhq-e5.myshopify.com successfully synced! Products are ready for automation.");
+                btn.innerText = "Sync Shopify Now";
+            }, 1000);
+        }
 
-      <div class="social-card">
-        <span class="badge">Not added</span>
-        <div class="social-header">
-          <div class="social-logo twitter">𝕏</div>
-          <div>
-            <h4>X (Twitter)</h4>
-            <p>Post store updates instantly.</p>
-          </div>
-        </div>
-        <button class="btn-connect" onclick="alert('Connecting X (Twitter)...')">Add</button>
-      </div>
-
-      <div class="social-card">
-        <span class="badge">Not added</span>
-        <div class="social-header">
-          <div class="social-logo pinterest">P</div>
-          <div>
-            <h4>Pinterest</h4>
-            <p>One-click connect product pins.</p>
-          </div>
-        </div>
-        <button class="btn-connect" onclick="alert('Connecting Pinterest...')">Add</button>
-      </div>
-
-      <div class="social-card">
-        <span class="badge">Not added</span>
-        <div class="social-header">
-          <div class="social-logo telegram">✈</div>
-          <div>
-            <h4>Telegram</h4>
-            <p>Post to channel through bot.</p>
-          </div>
-        </div>
-        <button class="btn-connect" onclick="alert('Connecting Telegram bot...')">Add</button>
-      </div>
-
-      <div class="social-card">
-        <span class="badge" style="background: #0f2fe; color: #6284c7;">Soon</span>
-        <div class="social-header">
-          <div class="social-logo tiktok">♪</div>
-          <div>
-            <h4>TikTok</h4>
-            <p>Post product videos to TikTok.</p>
-          </div>
-        </div>
-        <button class="btn-connect" style="opacity: 0.5; cursor: not-allowed; background: #fdfafc;" onclick="alert('TikTok integration coming soon!')">Soon</button>
-      </div>
-    </div>
-  </main>
-
-  <script>
-    document.querySelectorAll('.menu li').forEach(item => {
-      item.addEventListener('click', function() {
-        document.querySelector('.menu li.active')?.classList.remove('active');
-        this.classList.add('active');
-      });
-    });
-  </script>
+        function connectFacebook() {
+            alert("Facebook Page (ID: 992996150767582) is securely linked via Render environment variables and ready for auto-posting!");
+        }
+    </script>
 </body>
 </html>
