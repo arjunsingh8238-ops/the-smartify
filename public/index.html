@@ -5,105 +5,189 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Smartify - Social Automation Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
+        
+        /* Card and layout styles */
+        .professional-bg { background-color: #fafafa; }
+        .sidebar-width { width: 260px; }
+        .nav-link.active { background-color: #fee2e2; color: #b91c1c; }
+        .stat-card { border: 1px solid #e2e8f0; border-radius: 12px; }
+        .channel-card { border: 1px solid #e2e8f0; border-radius: 16px; }
+        .badge-new { background-color: #fef3c7; color: #92400e; font-weight: 600; font-size: 10px; padding: 2px 6px; border-radius: 4px; }
+    </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 py-8">
-        <header class="flex justify-between items-center mb-8 border-b border-slate-800 pb-4">
-            <div>
-                <h1 class="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">The Smartify</h1>
-                <p class="text-slate-400 text-sm mt-1">Shopify Product Sync & Meta Social Automation</p>
+<body class="professional-bg text-gray-800 h-screen flex antialiased font-sans">
+
+    <!-- Sidebar -->
+    <aside class="sidebar-width bg-white border-r border-gray-200 flex flex-col p-6 space-y-10 shadow-sm">
+        <!-- Logo -->
+        <div class="flex items-center space-x-3">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="Logo" class="w-9 h-9 rounded-lg object-cover">
+            <span class="text-xl font-bold text-gray-900">The Smartify</span>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="flex-grow space-y-3">
+            <a href="#" class="nav-link active flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-th-large w-5 text-center opacity-60"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-store w-5 text-center opacity-60"></i>
+                <span>My Store</span>
+            </a>
+            <a href="#" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-magic w-5 text-center opacity-60"></i>
+                <span>Automations</span>
+            </a>
+            <a href="#" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100">
+                <i class="fab fa-whatsapp w-5 text-center opacity-60"></i>
+                <span>WhatsApp Sync</span>
+            </a>
+            <a href="#" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-shopping-bag w-5 text-center opacity-60"></i>
+                <span>Instagram Shop</span>
+            </a>
+            <a href="#" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-chart-line w-5 text-center opacity-60"></i>
+                <span>Analytics</span>
+            </a>
+            <a href="#" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-boxes w-5 text-center opacity-60"></i>
+                <span>Products</span>
+            </a>
+            <a href="#" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-users w-5 text-center opacity-60"></i>
+                <span>Customers</span>
+            </a>
+            <a href="#" class="nav-link flex items-center space-x-3 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100">
+                <i class="fas fa-cog w-5 text-center opacity-60"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <!-- User Info -->
+        <div class="mt-auto space-y-4">
+            <div class="flex items-center space-x-3 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User" class="w-10 h-10 rounded-full border-2 border-white shadow-sm">
+                <div>
+                    <div class="font-semibold text-gray-900 text-sm">Arjun</div>
+                    <div class="text-xs text-gray-500">Admin Panel</div>
+                </div>
             </div>
-            <button onclick="fetchProducts()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-medium transition shadow-lg shadow-indigo-600/30">
-                Sync Shopify Products
+            <button class="w-full text-center px-5 py-2.5 rounded-xl text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-8">
+        <!-- Header -->
+        <header class="flex items-center justify-between mb-10">
+            <h1 class="text-3xl font-extrabold text-gray-900">Dashboard Overview</h1>
+            <button class="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-yellow-500 hover:bg-yellow-600 shadow-sm flex items-center space-x-2">
+                <i class="fas fa-sync-alt text-xs"></i>
+                <span>Sync Shopify Now</span>
             </button>
         </header>
 
-        <div id="status-banner" class="mb-6 hidden p-4 rounded-xl text-sm"></div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-slate-800/50 border border-slate-700/60 p-6 rounded-2xl backdrop-blur">
-                <h3 class="text-slate-400 text-sm font-medium">Connected Store</h3>
-                <p class="text-xl font-semibold mt-2 text-cyan-400">bucbhq-e5.myshopify.com</p>
+        <!-- Stats Cards Grid -->
+        <div class="grid grid-cols-4 gap-6 mb-12">
+            <!-- Stat Card 1 -->
+            <div class="stat-card bg-white p-6 flex items-center space-x-5">
+                <div class="p-4 rounded-2xl bg-indigo-50 text-indigo-600 text-xl"><i class="fas fa-check-circle"></i></div>
+                <div>
+                    <div class="text-4xl font-bold text-gray-900">142</div>
+                    <div class="text-sm font-medium text-gray-500 mt-1">Products Synced</div>
+                </div>
             </div>
-            <div class="bg-slate-800/50 border border-slate-700/60 p-6 rounded-2xl backdrop-blur">
-                <h3 class="text-slate-400 text-sm font-medium">Total Products Synced</h3>
-                <p id="product-count" class="text-xl font-semibold mt-2 text-indigo-400">0</p>
+            <!-- Stat Card 2 -->
+            <div class="stat-card bg-white p-6 flex items-center space-x-5">
+                <div class="p-4 rounded-2xl bg-green-50 text-green-600 text-xl"><i class="fas fa-chart-bar"></i></div>
+                <div>
+                    <div class="text-4xl font-bold text-gray-900">1,240</div>
+                    <div class="text-sm font-medium text-gray-500 mt-1">Automations Run</div>
+                </div>
             </div>
-            <div class="bg-slate-800/50 border border-slate-700/60 p-6 rounded-2xl backdrop-blur">
-                <h3 class="text-slate-400 text-sm font-medium">Automation Status</h3>
-                <p class="text-xl font-semibold mt-2 text-emerald-400">Active & Ready</p>
+            <!-- Stat Card 3 -->
+            <div class="stat-card bg-white p-6 flex items-center space-x-5">
+                <div class="p-4 rounded-2xl bg-orange-50 text-orange-600 text-xl"><i class="fas fa-percentage"></i></div>
+                <div>
+                    <div class="text-4xl font-bold text-gray-900">98%</div>
+                    <div class="text-sm font-medium text-gray-500 mt-1">Sync Accuracy</div>
+                </div>
+            </div>
+            <!-- Stat Card 4 -->
+            <div class="stat-card bg-white p-6 flex items-center space-x-5">
+                <div class="p-4 rounded-2xl bg-purple-50 text-purple-600 text-xl"><i class="fas fa-power-off"></i></div>
+                <div>
+                    <div class="text-4xl font-bold text-gray-900">Active</div>
+                    <div class="text-sm font-medium text-gray-500 mt-1">Status</div>
+                </div>
             </div>
         </div>
 
+        <!-- Connected Sales Channels -->
         <section>
-            <h2 class="text-xl font-semibold mb-4">Shopify Product Catalog</h2>
-            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="col-span-full text-center py-12 text-slate-500 bg-slate-800/20 rounded-2xl border border-slate-800">
-                    Click "Sync Shopify Products" above to load your store items.
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold text-gray-900">Connected Sales Channels</h2>
+            </div>
+
+            <div class="grid grid-cols-6 gap-5">
+                <!-- Channel 1 -->
+                <div class="channel-card bg-white p-5 text-center space-y-3 relative">
+                    <span class="badge-new absolute top-3 right-3">NEW</span>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="FB" class="w-12 h-12 mx-auto rounded-full shadow-sm">
+                    <div class="text-sm font-semibold text-gray-900">Facebook Page</div>
+                    <div class="text-xs text-gray-500 h-4">Not Added</div>
+                    <button class="w-full text-center px-4 py-2 rounded-lg text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100">Add</button>
+                </div>
+                <!-- Channel 2 -->
+                <div class="channel-card bg-white p-5 text-center space-y-3 relative">
+                    <span class="badge-new absolute top-3 right-3">NEW</span>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Insta" class="w-12 h-12 mx-auto rounded-2xl shadow-sm">
+                    <div class="text-sm font-semibold text-gray-900">Instagram</div>
+                    <div class="text-xs text-gray-500 h-4">Not Added</div>
+                    <button class="w-full text-center px-4 py-2 rounded-lg text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100">Add</button>
+                </div>
+                <!-- Channel 3 -->
+                <div class="channel-card bg-white p-5 text-center space-y-3 relative">
+                    <span class="badge-new absolute top-3 right-3">NEW</span>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/X_logo_2023_%28white%29.png" alt="X" class="w-12 h-12 mx-auto rounded-2xl bg-gray-900 p-3 shadow-sm">
+                    <div class="text-sm font-semibold text-gray-900">X (Twitter)</div>
+                    <div class="text-xs text-gray-500 h-4">Sync updates instantly</div>
+                    <button class="w-full text-center px-4 py-2 rounded-lg text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100">Add</button>
+                </div>
+                <!-- Channel 4 -->
+                <div class="channel-card bg-white p-5 text-center space-y-3">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Pinterest-logo.png" alt="Pin" class="w-12 h-12 mx-auto rounded-full shadow-sm">
+                    <div class="text-sm font-semibold text-gray-900">Pinterest</div>
+                    <div class="text-xs text-gray-500 h-4">One-click connect products</div>
+                    <button class="w-full text-center px-4 py-2 rounded-lg text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100">Add</button>
+                </div>
+                <!-- Channel 5 -->
+                <div class="channel-card bg-white p-5 text-center space-y-3">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Tele" class="w-12 h-12 mx-auto rounded-full shadow-sm">
+                    <div class="text-sm font-semibold text-gray-900">Telegram</div>
+                    <div class="text-xs text-gray-500 h-4">Post to channel through bot</div>
+                    <button class="w-full text-center px-4 py-2 rounded-lg text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100">Add</button>
+                </div>
+                <!-- Channel 6 -->
+                <div class="channel-card bg-white p-5 text-center space-y-3">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/TikTok_logo.svg" alt="TikTok" class="w-12 h-12 mx-auto rounded-full p-1 shadow-sm bg-black">
+                    <div class="text-sm font-semibold text-gray-900">TikTok</div>
+                    <div class="text-xs text-gray-500 h-4">Post product collection via video</div>
+                    <button class="w-full text-center px-4 py-2 rounded-lg text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100">Add</button>
                 </div>
             </div>
         </section>
-    </div>
 
-    <script>
-        async function fetchProducts() {
-            const grid = document.getElementById('product-grid');
-            const countEl = document.getElementById('product-count');
-            const banner = document.getElementById('status-banner');
-            
-            grid.innerHTML = '<div class="col-span-full text-center py-12 text-indigo-400">Syncing products from Shopify...</div>';
-            
-            try {
-                const res = await fetch('/api/products');
-                const data = await res.json();
-                
-                if (data.success) {
-                    countEl.textContent = data.count;
-                    banner.className = 'mb-6 p-4 rounded-xl text-sm bg-emerald-500/10 border border-emerald-500/20 text-emerald-400';
-                    banner.textContent = `Successfully synced ${data.count} products from Shopify!`;
-                    banner.classList.remove('hidden');
+    </main>
 
-                    if (data.products.length === 0) {
-                        grid.innerHTML = '<div class="col-span-full text-center py-12 text-slate-400">No products found in your Shopify store.</div>';
-                        return;
-                    }
-
-                    grid.innerHTML = data.products.map(p => `
-                        <div class="bg-slate-800 border border-slate-700/80 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
-                            <div>
-                                <img src="${p.image ? p.image.src : 'https://via.placeholder.com/400'}" alt="${p.title}" class="w-full h-48 object-cover bg-slate-900">
-                                <div class="p-5">
-                                    <h3 class="font-semibold text-lg text-slate-100 truncate">${p.title}</h3>
-                                    <p class="text-slate-400 text-sm mt-1 line-clamp-2">${p.body_html ? p.body_html.replace(/<[^>]*>?/gm, '') : 'No description'}</p>
-                                </div>
-                            </div>
-                            <div class="p-5 pt-0 flex justify-between items-center mt-4">
-                                <span class="text-indigo-400 font-bold">$${p.variants?.[0]?.price || '0.00'}</span>
-                                <button onclick="postSocial('${p.id}')" class="bg-slate-700 hover:bg-indigo-600 text-white text-sm px-4 py-2 rounded-xl transition">
-                                    Auto Post
-                                </button>
-                            </div>
-                        </div>
-                    `).join('');
-                } else {
-                    throw new Error(data.error || 'Failed to fetch');
-                }
-            } catch (err) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-rose-400">Error: ${err.message}</div>`;
-                banner.className = 'mb-6 p-4 rounded-xl text-sm bg-rose-500/10 border border-rose-500/20 text-rose-400';
-                banner.textContent = `Sync failed: ${err.message}`;
-                banner.classList.remove('hidden');
-            }
-        }
-
-        async function postSocial(productId) {
-            alert(`Triggering automated Meta post for Product ID: ${productId}`);
-            await fetch('/api/post-social', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ productId, platform: 'Facebook & Instagram' })
-            });
-        }
-    </script>
 </body>
 </html>
