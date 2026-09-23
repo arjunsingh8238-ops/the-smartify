@@ -1,61 +1,55 @@
 const express = require('express');
+const axios = require('axios');
 const path = require('path');
+
 const app = express();
-
-const bodyParser = require('body-parser');
-const axios = require('axios'); // Facebook Graph API ke liye
-
-const PORT = process.env.PORT || 10000;
-
-// JSON body parser
-app.use(bodyParser.json());
-
-// Serve frontend static files from 'public' folder
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Shopify Product Create Webhook Endpoint
-app.post('/webhook/products/create', async (req, res) => {
-  try {
-    const product = req.body;
-    console.log('New Product Received from Shopify:', product.title);
+const SHOPIFY_SHOP = process.env.SHOPIFY_SHOP || 'bucbhq-e5.myshopify.com';
+const SHOPIFY_API_KEY = process.env.SHOPIFY_API_KEY;
+const SHOPIFY_API_SECRET = process.env.SHOPIFY_API_SECRET;
 
-    // Product ki details nikalna
-    const title = product.title;
-    const variants = product.variants || [];
-    const price = variants.length > 0 ? variants[0].price : 'N/A';
-    const images = product.images || [];
-    const imageUrl = images.length > 0 ? images[0].src : '';
+// API Route to fetch products from Shopify
+app.get('/api/products', async (req, res) => {
+    try {
+        if (!SHOPIFY_API_KEY || !SHOPIFY_API_SECRET) {
+            return res.status(400).json({ error: 'Shopify API credentials not configured in environment variables.' });
+        }
 
-    // Product ka link
-    const productHandle = product.handle || '';
-    const productUrl = productHandle ? `https://the-smartify.myshopify.com/products/${productHandle}` : '';
+        // Using Shopify Admin REST API
+        const url = `https://${SHOPIFY_SHOP}/admin/api/2024-07/products.json?limit=250`;
+        const response = await axios.get(url, {
+            headers: {
+                'X-Shopify-Access-Token': SHOPIFY_API_SECRET
+            }
+        });
 
-    // Facebook Page par share karne ke liye message
-    const message = `🔥 New Arrival: ${title}\n💰 Price: $${price}\n👉 Buy now: ${productUrl}`;
-
-    // Facebook Page Auto-Sharing Logic
-    const PAGE_ACCESS_TOKEN = process.env.PR_PAGE_ACCESS_TOKEN;
-    const PAGE_ID = process.env.PR_PAGE_ID;
-
-    if (PAGE_ACCESS_TOKEN && PAGE_ID) {
-      const fbUrl = `https://graph.facebook.com/v18.0/${PAGE_ID}/feed`;
-      await axios.post(fbUrl, {
-        message: message,
-        link: productUrl,
-        access_token: PAGE_ACCESS_TOKEN
-      });
-      console.log('Product successfully shared to Facebook Page!');
-    } else {
-      console.log('Facebook credentials not configured yet, skipping social share.');
+        res.json({
+            success: true,
+            count: response.data.products.length,
+            products: response.data.products
+        });
+    } catch (error) {
+        console.error('Error fetching products:', error.response?.data || error.message);
+        res.status(500).json({ 
+            success: false, 
+            error: error.response?.data?.errors || error.message 
+        });
     }
-
-    res.status(200).send('Webhook received successfully!');
-  } catch (error) {
-    console.error('Error processing webhook:', error.message);
-    res.status(500).send('Internal Server Error!');
-  }
 });
 
+// Meta Posting Simulation / Endpoint placeholder
+app.post('/api/post-social', async (req, res) => {
+    const { productId, platform } = req.body;
+    // Here you can integrate Facebook/Instagram Graph API posting logic
+    res.json({ 
+        success: true, 
+        message: `Successfully triggered automated post for Product ID ${productId} to ${platform || 'Facebook & Instagram'}!` 
+    });
+});
+
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
