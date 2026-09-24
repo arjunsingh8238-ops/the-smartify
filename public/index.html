@@ -2,210 +2,200 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Smartify</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { background-color: #faf9f6; font-family: system-ui, -apple-system, sans-serif; }
-        .sidebar { background-color: #fff9f6; width: 180px; min-width: 180px; }
+        * { box-sizing: border-box; }
+        body { background-color: #faf9f6; font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 0; display: flex; height: 100vh; overflow: hidden; width: 100vw; }
+        .sidebar { background-color: #fff9f6; width: 165px; min-width: 165px; display: flex; flex-direction: column; justify-content: space-between; padding: 10px; border-right: 1px solid #e5e7eb; height: 100%; overflow-y: auto; }
         .nav-active { background-color: #fed7d7; color: #9b2c2c; }
-        .custom-card { background: #ffffff; border: 1px solid #edf2f7; border-radius: 10px; }
-        .badge-tag { font-size: 8px; padding: 1px 4px; border-radius: 3px; background: #edf2f7; color: #4a5568; }
+        .main-panel { flex: 1; height: 100%; overflow-y: auto; padding: 12px; width: calc(100% - 165px); }
+        .custom-card { background: #ffffff; border: 1px solid #edf2f7; border-radius: 8px; }
+        .badge-tag { font-size: 7px; padding: 1px 3px; border-radius: 3px; background: #edf2f7; color: #4a5568; }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden">
+<body>
 
     <!-- Sidebar Section -->
-    <aside class="sidebar border-r border-gray-200 flex flex-col justify-between p-2.5 h-full overflow-y-auto">
-        <div class="space-y-3">
+    <aside class="sidebar">
+        <div>
             <!-- Brand Logo -->
-            <div class="flex items-center space-x-2 px-1">
-                <div class="w-6 h-6 bg-black text-white rounded-md flex items-center justify-center font-bold text-[10px]">S</div>
-                <span class="text-xs font-bold text-gray-900">The Smartify</span>
+            <div class="flex items-center space-x-1.5 px-1 mb-3">
+                <div class="w-5 h-5 bg-black text-white rounded flex items-center justify-center font-bold text-[9px]">S</div>
+                <span class="text-[11px] font-bold text-gray-900">The Smartify</span>
             </div>
 
             <!-- Navigation Links -->
             <nav class="space-y-0.5">
-                <a href="#" class="nav-active flex items-center space-x-2 px-2 py-1.5 rounded-lg text-[11px] font-semibold">
-                    <span class="w-4 h-4 rounded bg-orange-100 text-orange-600 flex items-center justify-center text-[9px]"><i class="fas fa-th-large"></i></span>
+                <a href="#" class="nav-active flex items-center space-x-2 px-2 py-1 rounded-md text-[10px] font-semibold">
+                    <span class="w-3.5 h-3.5 rounded bg-orange-100 text-orange-600 flex items-center justify-center text-[8px]"><i class="fas fa-th-large"></i></span>
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="flex items-center space-x-2 px-2 py-1.5 rounded-lg text-[11px] font-medium text-gray-600 hover:bg-gray-100">
-                    <span class="w-4 h-4 rounded bg-pink-100 text-pink-600 flex items-center justify-center text-[9px]"><i class="fas fa-store"></i></span>
+                <a href="#" class="flex items-center space-x-2 px-2 py-1 rounded-md text-[10px] font-medium text-gray-600 hover:bg-gray-100">
+                    <span class="w-3.5 h-3.5 rounded bg-pink-100 text-pink-600 flex items-center justify-center text-[8px]"><i class="fas fa-store"></i></span>
                     <span>My Store</span>
                 </a>
-                <a href="#" class="flex items-center space-x-2 px-2 py-1.5 rounded-lg text-[11px] font-medium text-gray-600 hover:bg-gray-100">
-                    <span class="w-4 h-4 rounded bg-orange-100 text-orange-600 flex items-center justify-center text-[9px]"><i class="fas fa-bolt"></i></span>
+                <a href="#" class="flex items-center space-x-2 px-2 py-1 rounded-md text-[10px] font-medium text-gray-600 hover:bg-gray-100">
+                    <span class="w-3.5 h-3.5 rounded bg-orange-100 text-orange-600 flex items-center justify-center text-[8px]"><i class="fas fa-bolt"></i></span>
                     <span>Automations</span>
                 </a>
-                <a href="#" class="flex items-center space-x-2 px-2 py-1.5 rounded-lg text-[11px] font-medium text-gray-600 hover:bg-gray-100">
-                    <span class="w-4 h-4 rounded bg-green-100 text-green-600 flex items-center justify-center text-[9px]"><i class="fab fa-whatsapp"></i></span>
+                <a href="#" class="flex items-center space-x-2 px-2 py-1 rounded-md text-[10px] font-medium text-gray-600 hover:bg-gray-100">
+                    <span class="w-3.5 h-3.5 rounded bg-green-100 text-green-600 flex items-center justify-center text-[8px]"><i class="fab fa-whatsapp"></i></span>
                     <span>WhatsApp Sync</span>
                 </a>
-                <a href="#" class="flex items-center space-x-2 px-2 py-1.5 rounded-lg text-[11px] font-medium text-gray-600 hover:bg-gray-100">
-                    <span class="w-4 h-4 rounded bg-blue-100 text-blue-600 flex items-center justify-center text-[9px]"><i class="fas fa-shopping-bag"></i></span>
+                <a href="#" class="flex items-center space-x-2 px-2 py-1 rounded-md text-[10px] font-medium text-gray-600 hover:bg-gray-100">
+                    <span class="w-3.5 h-3.5 rounded bg-blue-100 text-blue-600 flex items-center justify-center text-[8px]"><i class="fas fa-shopping-bag"></i></span>
                     <span>Instagram</span>
                 </a>
-                <a href="#" class="flex items-center space-x-2 px-2 py-1.5 rounded-lg text-[11px] font-medium text-gray-600 hover:bg-gray-100">
-                    <span class="w-4 h-4 rounded bg-purple-100 text-purple-600 flex items-center justify-center text-[9px]"><i class="fas fa-chart-line"></i></span>
+                <a href="#" class="flex items-center space-x-2 px-2 py-1 rounded-md text-[10px] font-medium text-gray-600 hover:bg-gray-100">
+                    <span class="w-3.5 h-3.5 rounded bg-purple-100 text-purple-600 flex items-center justify-center text-[8px]"><i class="fas fa-chart-line"></i></span>
                     <span>Analytics</span>
                 </a>
-                <a href="#" class="flex items-center space-x-2 px-2 py-1.5 rounded-lg text-[11px] font-medium text-gray-600 hover:bg-gray-100">
-                    <span class="w-4 h-4 rounded bg-cyan-100 text-cyan-600 flex items-center justify-center text-[9px]"><i class="fas fa-box"></i></span>
+                <a href="#" class="flex items-center space-x-2 px-2 py-1 rounded-md text-[10px] font-medium text-gray-600 hover:bg-gray-100">
+                    <span class="w-3.5 h-3.5 rounded bg-cyan-100 text-cyan-600 flex items-center justify-center text-[8px]"><i class="fas fa-box"></i></span>
                     <span>Products</span>
                 </a>
-                <a href="#" class="flex items-center space-x-2 px-2 py-1.5 rounded-lg text-[11px] font-medium text-gray-600 hover:bg-gray-100">
-                    <span class="w-4 h-4 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center text-[9px]"><i class="fas fa-users"></i></span>
+                <a href="#" class="flex items-center space-x-2 px-2 py-1 rounded-md text-[10px] font-medium text-gray-600 hover:bg-gray-100">
+                    <span class="w-3.5 h-3.5 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center text-[8px]"><i class="fas fa-users"></i></span>
                     <span>Customers</span>
                 </a>
-                <a href="#" class="flex items-center space-x-2 px-2 py-1.5 rounded-lg text-[11px] font-medium text-gray-600 hover:bg-gray-100">
-                    <span class="w-4 h-4 rounded bg-yellow-100 text-yellow-600 flex items-center justify-center text-[9px]"><i class="fas fa-cog"></i></span>
+                <a href="#" class="flex items-center space-x-2 px-2 py-1 rounded-md text-[10px] font-medium text-gray-600 hover:bg-gray-100">
+                    <span class="w-3.5 h-3.5 rounded bg-yellow-100 text-yellow-600 flex items-center justify-center text-[8px]"><i class="fas fa-cog"></i></span>
                     <span>Settings</span>
                 </a>
             </nav>
         </div>
 
         <!-- User Profile Footer -->
-        <div class="space-y-1.5 pt-2 border-t border-gray-200">
-            <div class="custom-card p-1.5 flex items-center space-x-2">
-                <div class="w-5 h-5 bg-gray-200 rounded-full flex items-center justify-center text-[9px] font-bold text-gray-700">A</div>
-                <div class="leading-tight">
-                    <div class="text-[10px] font-bold text-gray-900">Arjun</div>
-                    <div class="text-[8px] text-gray-400">Admin Plan</div>
+        <div class="space-y-1 pt-2 border-t border-gray-200">
+            <div class="custom-card p-1.5 flex items-center space-x-1.5">
+                <div class="w-4 h-4 bg-gray-200 rounded-full flex items-center justify-center text-[8px] font-bold text-gray-700">A</div>
+                <div class="leading-tight overflow-hidden">
+                    <div class="text-[9px] font-bold text-gray-900 truncate">Arjun</div>
+                    <div class="text-[7px] text-gray-400">Admin Plan</div>
                 </div>
             </div>
-            <button class="w-full bg-white border border-red-100 text-red-500 hover:bg-red-50 text-[10px] font-semibold py-1 rounded-md">Logout</button>
+            <button class="w-full bg-white border border-red-100 text-red-500 text-[9px] font-semibold py-0.5 rounded">Logout</button>
         </div>
     </aside>
 
     <!-- Main Content Panel -->
-    <main class="flex-1 overflow-y-auto p-4">
+    <main class="main-panel">
         <!-- Header -->
-        <div class="flex justify-between items-start mb-4">
+        <div class="flex justify-between items-start mb-3">
             <div>
-                <h1 class="text-sm font-extrabold text-gray-900">Dashboard Overview</h1>
-                <p class="text-[10px] text-gray-500">Manage your Shopify sync and social automation channels.</p>
+                <h1 class="text-xs font-extrabold text-gray-900 m-0">Dashboard Overview</h1>
+                <p class="text-[9px] text-gray-500 m-0 mt-0.5">Manage your Shopify sync and social channels.</p>
             </div>
-            <button class="bg-yellow-400 hover:bg-yellow-500 text-gray-900 text-[10px] font-bold px-2.5 py-1.5 rounded-lg shadow-sm flex items-center space-x-1">
-                <i class="fas fa-sync-alt text-[9px]"></i>
+            <button class="bg-yellow-400 text-gray-900 text-[9px] font-bold px-2 py-1 rounded-md flex items-center space-x-1 shrink-0">
+                <i class="fas fa-sync-alt text-[8px]"></i>
                 <span>Sync Shopify</span>
             </button>
         </div>
 
-        <!-- Top Stats Row (4 Cards) -->
-        <div class="grid grid-cols-4 gap-2.5 mb-4">
-            <div class="custom-card p-2.5 flex items-center space-x-2">
-                <div class="w-7 h-7 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-xs"><i class="fas fa-box"></i></div>
-                <div>
-                    <div class="text-xs font-bold text-gray-900">142</div>
-                    <div class="text-[9px] text-gray-400">Synced</div>
+        <!-- Top Stats Row (4 Cards in 1 Row) -->
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin-bottom: 12px; width: 100%;">
+            <div class="custom-card p-1.5 flex items-center space-x-1.5">
+                <div class="w-5 h-5 rounded bg-blue-50 text-blue-600 flex items-center justify-center text-[10px] shrink-0"><i class="fas fa-box"></i></div>
+                <div class="overflow-hidden">
+                    <div class="text-[10px] font-bold text-gray-900 leading-none">142</div>
+                    <div class="text-[7px] text-gray-400 mt-0.5 truncate">Synced</div>
                 </div>
             </div>
-            <div class="custom-card p-2.5 flex items-center space-x-2">
-                <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-xs"><i class="fas fa-bolt"></i></div>
-                <div>
-                    <div class="text-xs font-bold text-gray-900">1,240</div>
-                    <div class="text-[9px] text-gray-400">Automations</div>
+            <div class="custom-card p-1.5 flex items-center space-x-1.5">
+                <div class="w-5 h-5 rounded bg-emerald-50 text-emerald-600 flex items-center justify-center text-[10px] shrink-0"><i class="fas fa-bolt"></i></div>
+                <div class="overflow-hidden">
+                    <div class="text-[10px] font-bold text-gray-900 leading-none">1,240</div>
+                    <div class="text-[7px] text-gray-400 mt-0.5 truncate">Automations</div>
                 </div>
             </div>
-            <div class="custom-card p-2.5 flex items-center space-x-2">
-                <div class="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-xs"><i class="fas fa-comment-alt"></i></div>
-                <div>
-                    <div class="text-xs font-bold text-gray-900">98%</div>
-                    <div class="text-[9px] text-gray-400">Accuracy</div>
+            <div class="custom-card p-1.5 flex items-center space-x-1.5">
+                <div class="w-5 h-5 rounded bg-amber-50 text-amber-600 flex items-center justify-center text-[10px] shrink-0"><i class="fas fa-comment-alt"></i></div>
+                <div class="overflow-hidden">
+                    <div class="text-[10px] font-bold text-gray-900 leading-none">98%</div>
+                    <div class="text-[7px] text-gray-400 mt-0.5 truncate">Accuracy</div>
                 </div>
             </div>
-            <div class="custom-card p-2.5 flex items-center space-x-2">
-                <div class="w-7 h-7 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-xs"><i class="fas fa-toggle-on"></i></div>
-                <div>
-                    <div class="text-xs font-bold text-gray-900">Active</div>
-                    <div class="text-[9px] text-gray-400">PWA Status</div>
+            <div class="custom-card p-1.5 flex items-center space-x-1.5">
+                <div class="w-5 h-5 rounded bg-purple-50 text-purple-600 flex items-center justify-center text-[10px] shrink-0"><i class="fas fa-toggle-on"></i></div>
+                <div class="overflow-hidden">
+                    <div class="text-[10px] font-bold text-gray-900 leading-none">Active</div>
+                    <div class="text-[7px] text-gray-400 mt-0.5 truncate">Status</div>
                 </div>
             </div>
         </div>
 
         <!-- Connected Sales Channels -->
         <div>
-            <h2 class="text-xs font-bold text-gray-900 mb-2.5">Connected Sales Channels</h2>
+            <h2 class="text-[11px] font-bold text-gray-900 mb-2">Connected Sales Channels</h2>
             
-            <div class="grid grid-cols-3 gap-2.5">
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; width: 100%;">
                 <!-- Facebook -->
-                <div class="custom-card p-2.5 relative flex flex-col justify-between space-y-2">
-                    <span class="absolute top-2 right-2 badge-tag">Not added</span>
-                    <div class="space-y-1">
-                        <div class="w-5 h-5 bg-blue-600 text-white rounded flex items-center justify-center text-[10px] font-bold">f</div>
-                        <div>
-                            <div class="text-[10px] font-bold text-gray-900">Facebook Page</div>
-                            <div class="text-[8px] text-gray-400 leading-tight">Post to FB automatically.</div>
-                        </div>
+                <div class="custom-card p-2 relative flex flex-col justify-between" style="min-height: 85px;">
+                    <span class="absolute top-1.5 right-1.5 badge-tag">Not added</span>
+                    <div>
+                        <div class="w-4 h-4 bg-blue-600 text-white rounded flex items-center justify-center text-[9px] font-bold mb-1">f</div>
+                        <div class="text-[9px] font-bold text-gray-900 leading-tight">Facebook Page</div>
+                        <div class="text-[7px] text-gray-400 leading-tight mt-0.5">Post to FB automatically.</div>
                     </div>
-                    <button class="w-full bg-blue-50 text-blue-600 hover:bg-blue-100 text-[9px] font-semibold py-1 rounded">Add</button>
+                    <button class="w-full bg-blue-50 text-blue-600 text-[8px] font-semibold py-0.5 rounded mt-1.5">Add</button>
                 </div>
 
                 <!-- Instagram -->
-                <div class="custom-card p-2.5 relative flex flex-col justify-between space-y-2">
-                    <span class="absolute top-2 right-2 badge-tag">Not added</span>
-                    <div class="space-y-1">
-                        <div class="w-5 h-5 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white rounded flex items-center justify-center text-[9px]"><i class="fab fa-instagram"></i></div>
-                        <div>
-                            <div class="text-[10px] font-bold text-gray-900">Instagram</div>
-                            <div class="text-[8px] text-gray-400 leading-tight">Business feed auto-sync.</div>
-                        </div>
+                <div class="custom-card p-2 relative flex flex-col justify-between" style="min-height: 85px;">
+                    <span class="absolute top-1.5 right-1.5 badge-tag">Not added</span>
+                    <div>
+                        <div class="w-4 h-4 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white rounded flex items-center justify-center text-[8px] mb-1"><i class="fab fa-instagram"></i></div>
+                        <div class="text-[9px] font-bold text-gray-900 leading-tight">Instagram</div>
+                        <div class="text-[7px] text-gray-400 leading-tight mt-0.5">Business feed auto-sync.</div>
                     </div>
-                    <button class="w-full bg-blue-50 text-blue-600 hover:bg-blue-100 text-[9px] font-semibold py-1 rounded">Add</button>
+                    <button class="w-full bg-blue-50 text-blue-600 text-[8px] font-semibold py-0.5 rounded mt-1.5">Add</button>
                 </div>
 
                 <!-- X (Twitter) -->
-                <div class="custom-card p-2.5 relative flex flex-col justify-between space-y-2">
-                    <span class="absolute top-2 right-2 badge-tag">Not added</span>
-                    <div class="space-y-1">
-                        <div class="w-5 h-5 bg-black text-white rounded flex items-center justify-center text-[9px] font-bold">X</div>
-                        <div>
-                            <div class="text-[10px] font-bold text-gray-900">X (Twitter)</div>
-                            <div class="text-[8px] text-gray-400 leading-tight">Post updates instantly.</div>
-                        </div>
+                <div class="custom-card p-2 relative flex flex-col justify-between" style="min-height: 85px;">
+                    <span class="absolute top-1.5 right-1.5 badge-tag">Not added</span>
+                    <div>
+                        <div class="w-4 h-4 bg-black text-white rounded flex items-center justify-center text-[8px] font-bold mb-1">X</div>
+                        <div class="text-[9px] font-bold text-gray-900 leading-tight">X (Twitter)</div>
+                        <div class="text-[7px] text-gray-400 leading-tight mt-0.5">Post updates instantly.</div>
                     </div>
-                    <button class="w-full bg-blue-50 text-blue-600 hover:bg-blue-100 text-[9px] font-semibold py-1 rounded">Add</button>
+                    <button class="w-full bg-blue-50 text-blue-600 text-[8px] font-semibold py-0.5 rounded mt-1.5">Add</button>
                 </div>
 
                 <!-- Pinterest -->
-                <div class="custom-card p-2.5 relative flex flex-col justify-between space-y-2">
-                    <span class="absolute top-2 right-2 badge-tag">Not added</span>
-                    <div class="space-y-1">
-                        <div class="w-5 h-5 bg-red-600 text-white rounded flex items-center justify-center text-[9px] font-bold">P</div>
-                        <div>
-                            <div class="text-[10px] font-bold text-gray-900">Pinterest</div>
-                            <div class="text-[8px] text-gray-400 leading-tight">Connect product pins.</div>
-                        </div>
+                <div class="custom-card p-2 relative flex flex-col justify-between" style="min-height: 85px;">
+                    <span class="absolute top-1.5 right-1.5 badge-tag">Not added</span>
+                    <div>
+                        <div class="w-4 h-4 bg-red-600 text-white rounded flex items-center justify-center text-[8px] font-bold mb-1">P</div>
+                        <div class="text-[9px] font-bold text-gray-900 leading-tight">Pinterest</div>
+                        <div class="text-[7px] text-gray-400 leading-tight mt-0.5">Connect product pins.</div>
                     </div>
-                    <button class="w-full bg-blue-50 text-blue-600 hover:bg-blue-100 text-[9px] font-semibold py-1 rounded">Add</button>
+                    <button class="w-full bg-blue-50 text-blue-600 text-[8px] font-semibold py-0.5 rounded mt-1.5">Add</button>
                 </div>
 
                 <!-- Telegram -->
-                <div class="custom-card p-2.5 relative flex flex-col justify-between space-y-2">
-                    <span class="absolute top-2 right-2 badge-tag">Not added</span>
-                    <div class="space-y-1">
-                        <div class="w-5 h-5 bg-sky-500 text-white rounded flex items-center justify-center text-[9px]"><i class="fab fa-telegram-plane"></i></div>
-                        <div>
-                            <div class="text-[10px] font-bold text-gray-900">Telegram</div>
-                            <div class="text-[8px] text-gray-400 leading-tight">Post through bot.</div>
-                        </div>
+                <div class="custom-card p-2 relative flex flex-col justify-between" style="min-height: 85px;">
+                    <span class="absolute top-1.5 right-1.5 badge-tag">Not added</span>
+                    <div>
+                        <div class="w-4 h-4 bg-sky-500 text-white rounded flex items-center justify-center text-[8px] mb-1"><i class="fab fa-telegram-plane"></i></div>
+                        <div class="text-[9px] font-bold text-gray-900 leading-tight">Telegram</div>
+                        <div class="text-[7px] text-gray-400 leading-tight mt-0.5">Post through bot.</div>
                     </div>
-                    <button class="w-full bg-blue-50 text-blue-600 hover:bg-blue-100 text-[9px] font-semibold py-1 rounded">Add</button>
+                    <button class="w-full bg-blue-50 text-blue-600 text-[8px] font-semibold py-0.5 rounded mt-1.5">Add</button>
                 </div>
 
                 <!-- TikTok -->
-                <div class="custom-card p-2.5 relative flex flex-col justify-between space-y-2">
-                    <span class="absolute top-2 right-2 badge-tag" style="background:#fed7d7; color:#9b2c2c;">Soon</span>
-                    <div class="space-y-1">
-                        <div class="w-5 h-5 bg-black text-white rounded flex items-center justify-center text-[9px]"><i class="fab fa-tiktok"></i></div>
-                        <div>
-                            <div class="text-[10px] font-bold text-gray-900">TikTok</div>
-                            <div class="text-[8px] text-gray-400 leading-tight">Post product videos.</div>
-                        </div>
+                <div class="custom-card p-2 relative flex flex-col justify-between" style="min-height: 85px;">
+                    <span class="absolute top-1.5 right-1.5 badge-tag" style="background:#fed7d7; color:#9b2c2c;">Soon</span>
+                    <div>
+                        <div class="w-4 h-4 bg-black text-white rounded flex items-center justify-center text-[8px] mb-1"><i class="fab fa-tiktok"></i></div>
+                        <div class="text-[9px] font-bold text-gray-900 leading-tight">TikTok</div>
+                        <div class="text-[7px] text-gray-400 leading-tight mt-0.5">Post product videos.</div>
                     </div>
-                    <button class="w-full bg-gray-100 text-gray-400 text-[9px] font-semibold py-1 rounded cursor-not-allowed">Soon</button>
+                    <button class="w-full bg-gray-100 text-gray-400 text-[8px] font-semibold py-0.5 rounded mt-1.5 cursor-not-allowed">Soon</button>
                 </div>
             </div>
         </div>
