@@ -200,6 +200,46 @@
             </div>
         </div>
     </main>
+    </main>
 
+    <!-- Yeh rahi nayi line script ke liye -->
+    <script>
+        // Sync Shopify Button Action
+        document.querySelector('button.bg-yellow-400').addEventListener('click', async () => {
+            alert('Syncing Shopify store...');
+            try {
+                const response = await fetch('/api/auth/shopify');
+                const data = await response.json();
+                if(data.success) {
+                    alert('Shopify Connected/Synced Successfully!');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        // Sales Channels 'Add' Buttons Action
+        document.querySelectorAll('.custom-card button').forEach(button => {
+            if(button.textContent.trim() === 'Add') {
+                button.addEventListener('click', (e) => {
+                    const card = e.target.closest('.custom-card');
+                    const channelName = card.querySelector('.font-bold').textContent.trim();
+                    alert(`Connecting to ${channelName}...`);
+                    
+                    fetch('/api/connect/channel', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ channel: channelName })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if(data.success) {
+                            alert(`${channelName} authorization window will open now.`);
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 </body>
-</html>
+<</html>
